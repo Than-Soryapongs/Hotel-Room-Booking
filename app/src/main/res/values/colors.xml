@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="purple_500">#6200EE</color>
+
+    <!-- Brand palette -->
+    <color name="brand_primary">#1C2A4A</color>
+    <color name="brand_primary_dark">#141F35</color>
+    <color name="brand_secondary">#F9B44E</color>
+    <color name="brand_accent">#31C5F4</color>
+    <color name="brand_surface">#FFFFFF</color>
+    <color name="brand_surface_elevated">#F5F7FB</color>
+    <color name="brand_text_primary">#0F172A</color>
+    <color name="brand_text_secondary">#4B5563</color>
+    <color name="brand_success">#2EBD85</color>
+    <color name="brand_error">#D14343</color>
+
+    <!-- Gradients -->
+    <color name="gradient_start">#1B2D6B</color>
+    <color name="gradient_end">#081024</color>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.madproject.roombookingapp.ui.login.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.madproject.roombookingapp.ui.signup.SignupFragment"
+        android:label="Sign Up"
+        tools:layout="@layout/fragment_signup" />
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.madproject.roombookingapp.ui.forgotpassword.ForgotPasswordFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_password" />
+
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.madproject.roombookingapp.ui.resetpassword.ResetPasswordFragment"
+        android:label="Reset Password"
+        tools:layout="@layout/fragment_reset_password" />
+
+    <fragment
+        android:id="@+id/emailVerificationFragment"
+        android:name="com.madproject.roombookingapp.ui.verification.EmailVerificationFragment"
+        android:label="Email Verification"
+        tools:layout="@layout/fragment_email_verification" />
+
+</navigation>

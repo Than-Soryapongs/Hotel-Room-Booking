@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="home_carousel_page_margin">32dp</dimen>
+	<dimen name="home_carousel_side_peek">48dp</dimen>
+	<dimen name="home_scroll_bottom_padding">136dp</dimen>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.RoomBookingApp.Button" parent="Widget.Material3.Button">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="backgroundTint">@color/brand_secondary</item>
+        <item name="android:textColor">@color/brand_text_primary</item>
+        <item name="cornerRadius">18dp</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <style name="Widget.RoomBookingApp.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="strokeColor">@color/brand_primary</item>
+        <item name="android:textColor">@color/brand_primary</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="cornerRadius">18dp</item>
+    </style>
+
+    <style name="Widget.RoomBookingApp.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/brand_primary</item>
+        <item name="boxBackgroundColor">@color/brand_surface_elevated</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+    </style>
+
+    <style name="Widget.RoomBookingApp.TextInputEditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@color/brand_text_primary</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextAppearance.RoomBookingApp.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/brand_surface</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.RoomBookingApp.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/brand_text_secondary</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+</resources>

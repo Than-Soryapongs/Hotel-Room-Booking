@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RoomBookingApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_primary_dark</item>
+        <item name="colorPrimaryVariant">@color/brand_primary</item>
+        <item name="colorSecondary">@color/brand_secondary</item>
+        <item name="android:statusBarColor">@color/brand_primary_dark</item>
+        <item name="android:navigationBarColor">@color/gradient_end</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@color/gradient_end</item>
+        <item name="materialButtonStyle">@style/Widget.RoomBookingApp.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.RoomBookingApp.Button.Outlined</item>
+        <item name="textInputStyle">@style/Widget.RoomBookingApp.TextInputLayout</item>
+    </style>
+</resources>
