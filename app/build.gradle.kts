@@ -85,6 +85,9 @@ dependencies {
     // Image loading
     implementation("io.coil-kt:coil:2.5.0")
 
+    // Charts
+    implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
+
     // Hilt Dependency Injection
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-compiler:2.48")

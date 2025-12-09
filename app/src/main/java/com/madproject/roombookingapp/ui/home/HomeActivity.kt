@@ -3,7 +3,7 @@ package com.madproject.roombookingapp.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +14,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.madproject.roombookingapp.R
 import com.madproject.roombookingapp.data.repository.AuthRepository
 import com.madproject.roombookingapp.databinding.ActivityHomeBinding
+import com.madproject.roombookingapp.ui.travellog.TravelLogActivity
+import com.madproject.roombookingapp.ui.mybookings.HistoryBookingsActivity
+import com.madproject.roombookingapp.ui.mybookings.MyBookingsActivity
 import com.madproject.roombookingapp.ui.profile.ProfileActivity
+import com.madproject.roombookingapp.util.Resource
+import com.madproject.roombookingapp.viewmodel.RoomViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -31,9 +36,12 @@ class HomeActivity : AppCompatActivity() {
     private var checkInDate: LocalDate? = null
     private var checkOutDate: LocalDate? = null
     private val displayDateFormatter = DateTimeFormatter.ofPattern("MMM dd", Locale.getDefault())
+    private val isoFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 
     @Inject
     lateinit var repository: AuthRepository
+
+    private val roomViewModel: RoomViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,7 @@ class HomeActivity : AppCompatActivity() {
         setupClickListeners()
         setupBookingForm()
         setupRoomCarousel()
+        observeRoomSearch()
     }
 
     private fun loadUserData() {
@@ -74,6 +83,14 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.ivAvatar.setOnClickListener(openProfileListener)
 
+        binding.cardMyBookings.setOnClickListener {
+            startActivity(Intent(this, MyBookingsActivity::class.java))
+        }
+
+        binding.cardTravelLog.setOnClickListener {
+            startActivity(Intent(this, TravelLogActivity::class.java))
+        }
+
         binding.btnPlanStay.setOnClickListener {
             binding.homeScroll.post {
                 binding.homeScroll.smoothScrollTo(0, binding.cardBooking.top)
@@ -86,7 +103,11 @@ class HomeActivity : AppCompatActivity() {
                     binding.homeScroll.smoothScrollTo(0, 0)
                     true
                 }
-                R.id.nav_history, R.id.nav_location, R.id.nav_membership -> {
+                R.id.nav_history -> {
+                    startActivity(Intent(this, HistoryBookingsActivity::class.java))
+                    true
+                }
+                R.id.nav_location, R.id.nav_membership -> {
                     Snackbar.make(binding.root, getString(R.string.home_nav_placeholder, item.title), Snackbar.LENGTH_SHORT).show()
                     true
                 }
@@ -116,13 +137,12 @@ class HomeActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, R.string.home_booking_missing_dates, Snackbar.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val message = getString(
-                R.string.home_booking_toast,
-                checkIn.format(displayDateFormatter),
-                checkOut.format(displayDateFormatter),
-                guests
+            val request = com.madproject.roombookingapp.data.model.RoomSearchRequest(
+                minCapacity = guests,
+                checkInDate = checkIn.format(isoFormatter),
+                checkOutDate = checkOut.format(isoFormatter)
             )
-            Toast.makeText(this@HomeActivity, message, Toast.LENGTH_LONG).show()
+            roomViewModel.searchRooms(request)
         }
     }
 
@@ -193,6 +213,41 @@ class HomeActivity : AppCompatActivity() {
 
     private fun openProfile() {
         startActivity(Intent(this, ProfileActivity::class.java))
+    }
+
+    private fun observeRoomSearch() {
+        roomViewModel.searchResult.observe(this) { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    binding.btnSearchRooms.isEnabled = false
+                }
+                is Resource.Success -> {
+                    binding.btnSearchRooms.isEnabled = true
+                    val rooms = result.data.orEmpty()
+                    if (rooms.isEmpty()) {
+                        Snackbar.make(binding.root, R.string.home_booking_no_rooms, Snackbar.LENGTH_LONG).show()
+                    } else {
+                        val intent = Intent(this, AvailableRoomsActivity::class.java).apply {
+                            putExtra(AvailableRoomsActivity.EXTRA_CHECK_IN, checkInDate?.format(isoFormatter))
+                            putExtra(AvailableRoomsActivity.EXTRA_CHECK_OUT, checkOutDate?.format(isoFormatter))
+                            putExtra(AvailableRoomsActivity.EXTRA_GUESTS, binding.etGuests.text?.toString()?.toIntOrNull() ?: 1)
+                        }
+                        startActivity(intent)
+                    }
+                }
+                is Resource.Error -> {
+                    binding.btnSearchRooms.isEnabled = true
+                    Snackbar.make(
+                        binding.root,
+                        result.message ?: getString(R.string.home_booking_error_generic),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+                else -> {
+                    binding.btnSearchRooms.isEnabled = true
+                }
+            }
+        }
     }
 
 }

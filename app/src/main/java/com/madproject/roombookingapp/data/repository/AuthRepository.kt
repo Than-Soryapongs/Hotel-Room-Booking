@@ -161,7 +161,7 @@ class AuthRepository @Inject constructor(
 
     suspend fun changePassword(request: ChangePasswordRequest): Resource<Map<String, String>> {
         return try {
-            val response = apiService.changePassword(request)
+            val response = apiService.changePassword(request.oldPassword, request.newPassword)
             if (response.isSuccessful && response.body() != null) {
                 Resource.Success(response.body()!!)
             } else Resource.Error(response.message() ?: "Failed to change password")
