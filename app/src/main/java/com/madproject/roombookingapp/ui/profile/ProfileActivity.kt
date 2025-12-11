@@ -21,6 +21,7 @@ import com.madproject.roombookingapp.data.model.UserResponse
 import com.madproject.roombookingapp.data.repository.AuthRepository
 import com.madproject.roombookingapp.databinding.ActivityProfileBinding
 import com.madproject.roombookingapp.ui.auth.AuthActivity
+import com.madproject.roombookingapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -129,7 +130,13 @@ class ProfileActivity : AppCompatActivity() {
         val lastLogin = user.lastLoginAt?.let { formatDate(it, formatter) } ?: "—"
         binding.tvMeta.text = getString(R.string.profile_meta, createdAt, lastLogin)
 
-        binding.ivAvatar.load(user.profileImageUrl) {
+        val fullAvatarUrl = if (user.profileImageUrl != null && !user.profileImageUrl.startsWith("http")) {
+            Constants.BASE_URL.trimEnd('/') + user.profileImageUrl
+        } else {
+            user.profileImageUrl
+        }
+
+        binding.ivAvatar.load(fullAvatarUrl) {
             placeholder(R.drawable.ic_user)
             error(R.drawable.ic_user)
             crossfade(true)

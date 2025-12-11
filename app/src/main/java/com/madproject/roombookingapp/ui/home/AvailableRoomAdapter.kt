@@ -9,6 +9,7 @@ import coil.load
 import com.madproject.roombookingapp.R
 import com.madproject.roombookingapp.data.model.AvailableRoomResponse
 import com.madproject.roombookingapp.databinding.ItemAvailableRoomBinding
+import com.madproject.roombookingapp.util.Constants
 import java.math.RoundingMode
 
 class AvailableRoomAdapter(
@@ -38,7 +39,13 @@ class AvailableRoomAdapter(
             } ?: binding.root.context.getString(R.string.available_room_price_unknown)
 
             val imageUrl = room.imageUrls?.firstOrNull()
-            binding.ivPhoto.load(imageUrl) {
+            val fullImageUrl = if (imageUrl != null && !imageUrl.startsWith("http")) {
+                Constants.BASE_URL.trimEnd('/') + imageUrl
+            } else {
+                imageUrl
+            }
+
+            binding.ivPhoto.load(fullImageUrl) {
                 crossfade(true)
                 placeholder(R.drawable.room_carousel_bg_1)
                 error(R.drawable.room_carousel_bg_2)
